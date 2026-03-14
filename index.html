@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>67</title>
+    <style>
+        /* Анимированный градиентный фон */
+        body { 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+            color: #ffffff;
+            background: linear-gradient(-45deg, #1a0b2e, #2b1b54, #1b3a4b, #0d1b2a);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Эффект матового стекла */
+        .glass {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            border-radius: 16px;
+        }
+
+        .container { 
+            max-width: 550px; 
+            margin: 0 auto; 
+            padding: 30px;
+            display: none; /* Скрыто до ввода пароля */
+        }
+
+        /* Экран блокировки */
+        #loginScreen {
+            max-width: 350px;
+            margin: 100px auto;
+            padding: 40px 30px;
+            text-align: center;
+        }
+
+        #loginScreen h2 {
+            margin-top: 0;
+            font-weight: 300;
+            margin-bottom: 25px;
+        }
+
+        h1 { 
+            font-size: 28px; 
+            font-weight: 300; 
+            margin-top: 0;
+            margin-bottom: 25px; 
+            letter-spacing: 1px;
+        }
+
+        textarea, input[type="text"], input[type="password"] { 
+            width: 100%; 
+            background: rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            color: #ffffff;
+            border-radius: 12px; 
+            padding: 16px; 
+            font-size: 16px;
+            font-family: inherit;
+            box-sizing: border-box;
+            transition: all 0.3s ease;
+        }
+
+        textarea { resize: vertical; min-height: 120px; }
+        
+        input[type="text"], input[type="password"] {
+            padding: 12px 16px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+        }
+
+        textarea:focus, input[type="text"]:focus, input[type="password"]:focus {
+            outline: none;
+            background: rgba(0, 0, 0, 0.3);
+            border-color: rgba(255, 255, 255, 0.3);
+        }
+
+        textarea::placeholder, input[type="text"]::placeholder, input[type="password"]::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+            margin-bottom: 35px;
+        }
+
+        button { 
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff; 
+            border: 1px solid rgba(255, 255, 255, 0.2); 
+            padding: 10px 24px; 
+            border-radius: 8px; 
+            cursor: pointer; 
+            font-size: 15px;
+            font-weight: 500;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        button:hover { 
+            background: rgba(255, 255, 255, 0.2); 
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
+        }
+
+        #loginBtn {
+            width: 100%;
+        }
+
+        #errorMessage {
+            color: #ff5252;
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+        }
+
+        .note { 
+            padding: 20px; 
+            margin-bottom: 15px;
+            display: flex; 
+            flex-direction: column; 
+            gap: 15px;
+        }
+
+        .note-text { 
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-size: 15px;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .note-footer {
+            display: flex;
+            justify-content: flex-end;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 10px;
+            margin-top: 5px;
+        }
+
+        .delete-btn { 
+            background: transparent;
+            border: none;
+            padding: 6px 12px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            text-transform: none;
+        }
+
+        .delete-btn:hover { 
+            background: rgba(255, 82, 82, 0.2);
+            color: #ff5252;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loginScreen" class="glass">
+        <h2>Доступ закрыт</h2>
+        <input type="password" id="passwordInput" placeholder="Введите пароль...">
+        <button id="loginBtn" onclick="checkPassword()">Войти</button>
+        <div id="errorMessage">Неверный пароль!</div>
+    </div>
+
+    <div id="appContainer" class="container glass">
+        <h1>67</h1>
+        <textarea id="noteInput" placeholder="Опишите свои идеи..."></textarea>
+        <div class="actions">
+            <button onclick="addNote()">Сохранить</button>
+        </div>
+        
+        <input type="text" id="searchInput" placeholder="Поиск по заметкам..." oninput="searchNotes()">
+        <div id="notesContainer"></div>
+    </div>
+
+    <script>
+        // ВАШ ПАРОЛЬ (по умолчанию "1234")
+        const MY_PASSWORD = "1234";
+
+        function checkPassword() {
+            const input = document.getElementById('passwordInput').value;
+            if (input === MY_PASSWORD) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('appContainer').style.display = 'block';
+                loadNotes(); 
+            } else {
+                document.getElementById('errorMessage').style.display = 'block';
+                document.getElementById('passwordInput').value = '';
+            }
+        }
+
+        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') checkPassword();
+        });
+
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, 
+                tag => ({
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    "'": '&#39;',
+                    '"': '&quot;'
+                }[tag])
+            );
+        }
+
+        function loadNotes(searchQuery = '') {
+            const notes = JSON.parse(localStorage.getItem('glassNotes')) || [];
+            const container = document.getElementById('notesContainer');
+            container.innerHTML = '';
+            
+            let notesWithIndices = notes.map((text, index) => ({ text, originalIndex: index }));
+            notesWithIndices.reverse();
+
+            if (searchQuery.trim() !== '') {
+                const lowerCaseQuery = searchQuery.toLowerCase();
+                notesWithIndices = notesWithIndices.filter(noteObj => 
+                    noteObj.text.toLowerCase().includes(lowerCaseQuery)
+                );
+            }
+
+            notesWithIndices.forEach(noteObj => {
+                const safeText = escapeHTML(noteObj.text); 
+                
+                const noteDiv = document.createElement('div');
+                noteDiv.className = 'note glass';
+                noteDiv.innerHTML = `
+                    <div class="note-text">${safeText}</div>
+                    <div class="note-footer">
+                        <button class="delete-btn" onclick="deleteNote(${noteObj.originalIndex})">Удалить</button>
+                    </div>
+                `;
+                container.appendChild(noteDiv);
+            });
+        }
+
+        function searchNotes() {
+            const query = document.getElementById('searchInput').value;
+            loadNotes(query);
+        }
+
+        function addNote() {
+            const input = document.getElementById('noteInput');
+            const noteText = input.value.trim();
+            
+            if (noteText !== '') {
+                const notes = JSON.parse(localStorage.getItem('glassNotes')) || [];
+                notes.push(noteText);
+                localStorage.setItem('glassNotes', JSON.stringify(notes));
+                input.value = ''; 
+                document.getElementById('searchInput').value = '';
+                loadNotes();      
+            }
+        }
+
+        function deleteNote(index) {
+            const notes = JSON.parse(localStorage.getItem('glassNotes')) || [];
+            notes.splice(index, 1);
+            localStorage.setItem('glassNotes', JSON.stringify(notes));
+            const currentSearchQuery = document.getElementById('searchInput').value;
+            loadNotes(currentSearchQuery);
+        }
+    </script>
+</body>
+</html>
