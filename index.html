@@ -3,16 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>67</title>
+    <title>serfus</title>
     <style>
-        /* Анимированный градиентный фон */
+        /* Более глубокий и дорогой градиент */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             margin: 0;
             padding: 40px 20px;
             min-height: 100vh;
             color: #ffffff;
-            background: linear-gradient(-45deg, #1a0b2e, #2b1b54, #1b3a4b, #0d1b2a);
+            background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0d1b2a);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
         }
@@ -23,107 +23,120 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Эффект матового стекла */
+        /* Улучшенный эффект стекла */
         .glass {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(16px);
-            -webkit-backdrop-filter: blur(16px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
-            border-radius: 16px;
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border-radius: 24px;
         }
 
+        /* Расширенный контейнер */
         .container { 
-            max-width: 550px; 
+            max-width: 650px; 
             margin: 0 auto; 
-            padding: 30px;
-            display: none; /* Скрыто до ввода пароля */
+            padding: 40px;
+            display: none; 
         }
 
         /* Экран блокировки */
         #loginScreen {
             max-width: 350px;
             margin: 100px auto;
-            padding: 40px 30px;
+            padding: 50px 40px;
             text-align: center;
         }
 
         #loginScreen h2 {
             margin-top: 0;
             font-weight: 300;
-            margin-bottom: 25px;
+            margin-bottom: 30px;
+            font-size: 32px;
+            letter-spacing: 2px;
         }
 
+        /* Центрированный главный заголовок */
         h1 { 
-            font-size: 28px; 
-            font-weight: 300; 
+            text-align: center;
+            font-size: 36px; 
+            font-weight: 200; 
             margin-top: 0;
-            margin-bottom: 25px; 
-            letter-spacing: 1px;
+            margin-bottom: 35px; 
+            letter-spacing: 3px;
+            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
+        /* Увеличенные поля ввода */
         textarea, input[type="text"], input[type="password"] { 
             width: 100%; 
-            background: rgba(0, 0, 0, 0.2);
+            background: rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ffffff;
-            border-radius: 12px; 
-            padding: 16px; 
-            font-size: 16px;
+            border-radius: 16px; 
+            padding: 20px; 
+            font-size: 17px;
             font-family: inherit;
             box-sizing: border-box;
             transition: all 0.3s ease;
         }
 
-        textarea { resize: vertical; min-height: 120px; }
+        /* Увеличена высота заметки */
+        textarea { 
+            resize: vertical; 
+            min-height: 250px; 
+            line-height: 1.5;
+        }
         
         input[type="text"], input[type="password"] {
-            padding: 12px 16px;
-            margin-bottom: 20px;
-            border-radius: 10px;
+            padding: 15px 20px;
+            margin-bottom: 25px;
+            border-radius: 12px;
         }
 
         textarea:focus, input[type="text"]:focus, input[type="password"]:focus {
             outline: none;
-            background: rgba(0, 0, 0, 0.3);
-            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(0, 0, 0, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
         }
 
         textarea::placeholder, input[type="text"]::placeholder, input[type="password"]::placeholder {
-            color: rgba(255, 255, 255, 0.5);
+            color: rgba(255, 255, 255, 0.4);
         }
 
         .actions {
             display: flex;
-            justify-content: flex-end;
-            margin-top: 15px;
-            margin-bottom: 35px;
+            justify-content: center; /* Кнопка сохранения теперь тоже по центру */
+            margin-top: 20px;
+            margin-bottom: 40px;
         }
 
         button { 
             background: rgba(255, 255, 255, 0.1);
             color: #ffffff; 
             border: 1px solid rgba(255, 255, 255, 0.2); 
-            padding: 10px 24px; 
-            border-radius: 8px; 
+            padding: 12px 35px; 
+            border-radius: 12px; 
             cursor: pointer; 
-            font-size: 15px;
+            font-size: 16px;
             font-weight: 500;
             backdrop-filter: blur(4px);
             transition: all 0.3s ease;
             text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         button:hover { 
             background: rgba(255, 255, 255, 0.2); 
-            border-color: rgba(255, 255, 255, 0.4);
-            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
         }
 
-        #loginBtn {
-            width: 100%;
-        }
+        #loginBtn { width: 100%; }
 
         #errorMessage {
             color: #ff5252;
@@ -133,8 +146,8 @@
         }
 
         .note { 
-            padding: 20px; 
-            margin-bottom: 15px;
+            padding: 25px; 
+            margin-bottom: 20px;
             display: flex; 
             flex-direction: column; 
             gap: 15px;
@@ -143,45 +156,48 @@
         .note-text { 
             white-space: pre-wrap;
             word-break: break-word;
-            font-size: 15px;
+            font-size: 16px;
             line-height: 1.6;
-            color: rgba(255, 255, 255, 0.9);
+            color: rgba(255, 255, 255, 0.95);
         }
 
         .note-footer {
             display: flex;
             justify-content: flex-end;
-            border-top: 1px solid rgba(255, 255, 255, 0.1);
-            padding-top: 10px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            padding-top: 15px;
             margin-top: 5px;
         }
 
         .delete-btn { 
             background: transparent;
             border: none;
-            padding: 6px 12px;
-            color: rgba(255, 255, 255, 0.6);
-            font-size: 13px;
+            padding: 8px 15px;
+            color: rgba(255, 255, 255, 0.5);
+            font-size: 14px;
             text-transform: none;
+            letter-spacing: 0.5px;
         }
 
         .delete-btn:hover { 
-            background: rgba(255, 82, 82, 0.2);
+            background: rgba(255, 82, 82, 0.15);
             color: #ff5252;
+            transform: translateY(0);
+            box-shadow: none;
         }
     </style>
 </head>
 <body>
 
     <div id="loginScreen" class="glass">
-        <h2>Доступ закрыт</h2>
-        <input type="password" id="passwordInput" placeholder="Введите пароль...">
+        <h2>serfus</h2>
+        <input type="password" id="passwordInput" placeholder="Пароль...">
         <button id="loginBtn" onclick="checkPassword()">Войти</button>
         <div id="errorMessage">Неверный пароль!</div>
     </div>
 
     <div id="appContainer" class="container glass">
-        <h1>67</h1>
+        <h1>serfus</h1>
         <textarea id="noteInput" placeholder="Опишите свои идеи..."></textarea>
         <div class="actions">
             <button onclick="addNote()">Сохранить</button>
@@ -192,7 +208,7 @@
     </div>
 
     <script>
-        // ВАШ ПАРОЛЬ (по умолчанию "1234")
+        // ТВОЙ ПАРОЛЬ 
         const MY_PASSWORD = "1234";
 
         function checkPassword() {
