@@ -5,16 +5,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>serfus</title>
     <style>
-        /* Более глубокий и дорогой градиент */
+        /* Глубокий градиент */
         body { 
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
             margin: 0;
-            padding: 40px 20px;
+            padding: 20px;
             min-height: 100vh;
             color: #ffffff;
             background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0d1b2a);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-sizing: border-box;
         }
 
         @keyframes gradientBG {
@@ -23,7 +27,7 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Улучшенный эффект стекла */
+        /* Эффект стекла */
         .glass {
             background: rgba(255, 255, 255, 0.03);
             backdrop-filter: blur(20px);
@@ -33,18 +37,20 @@
             border-radius: 24px;
         }
 
-        /* Расширенный контейнер */
+        /* Главный контейнер на весь экран */
         .container { 
-            max-width: 650px; 
-            margin: 0 auto; 
+            width: 100%;
+            max-width: 900px; /* Сделали еще шире */
             padding: 40px;
             display: none; 
+            position: relative;
+            box-sizing: border-box;
         }
 
         /* Экран блокировки */
         #loginScreen {
+            width: 100%;
             max-width: 350px;
-            margin: 100px auto;
             padding: 50px 40px;
             text-align: center;
         }
@@ -57,244 +63,83 @@
             letter-spacing: 2px;
         }
 
-        /* Центрированный главный заголовок */
+        /* Шапка с названием и иконкой */
+        .header {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
         h1 { 
-            text-align: center;
             font-size: 36px; 
             font-weight: 200; 
-            margin-top: 0;
-            margin-bottom: 35px; 
+            margin: 0;
             letter-spacing: 3px;
             text-shadow: 0 4px 10px rgba(0,0,0,0.3);
         }
 
-        /* Увеличенные поля ввода */
-        textarea, input[type="text"], input[type="password"] { 
+        /* Кнопка-иконка истории */
+        .history-btn {
+            position: absolute;
+            right: 0;
+            background: transparent;
+            border: none;
+            padding: 10px;
+            cursor: pointer;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+        }
+
+        .history-btn:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ffffff;
+            transform: scale(1.05);
+        }
+
+        .history-btn svg {
+            width: 28px;
+            height: 28px;
+            fill: currentColor;
+        }
+
+        /* Гигантское поле ввода */
+        textarea { 
             width: 100%; 
             background: rgba(0, 0, 0, 0.15);
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.1);
             color: #ffffff;
             border-radius: 16px; 
-            padding: 20px; 
-            font-size: 17px;
+            padding: 25px; 
+            font-size: 18px; /* Текст еще крупнее */
             font-family: inherit;
             box-sizing: border-box;
+            resize: none; /* Отключили ручное растягивание */
+            height: 50vh; /* Занимает половину высоты экрана */
             transition: all 0.3s ease;
+            line-height: 1.6;
         }
 
-        /* Увеличена высота заметки */
-        textarea { 
-            resize: vertical; 
-            min-height: 250px; 
-            line-height: 1.5;
-        }
-        
         input[type="text"], input[type="password"] {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: #ffffff;
             padding: 15px 20px;
             margin-bottom: 25px;
             border-radius: 12px;
+            font-size: 16px;
+            box-sizing: border-box;
         }
 
         textarea:focus, input[type="text"]:focus, input[type="password"]:focus {
             outline: none;
             background: rgba(0, 0, 0, 0.25);
             border-color: rgba(255, 255, 255, 0.4);
-            box-shadow: 0 0 15px rgba(255, 255, 255, 0.05);
-        }
-
-        textarea::placeholder, input[type="text"]::placeholder, input[type="password"]::placeholder {
-            color: rgba(255, 255, 255, 0.4);
-        }
-
-        .actions {
-            display: flex;
-            justify-content: center; /* Кнопка сохранения теперь тоже по центру */
-            margin-top: 20px;
-            margin-bottom: 40px;
-        }
-
-        button { 
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff; 
-            border: 1px solid rgba(255, 255, 255, 0.2); 
-            padding: 12px 35px; 
-            border-radius: 12px; 
-            cursor: pointer; 
-            font-size: 16px;
-            font-weight: 500;
-            backdrop-filter: blur(4px);
-            transition: all 0.3s ease;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-
-        button:hover { 
-            background: rgba(255, 255, 255, 0.2); 
-            border-color: rgba(255, 255, 255, 0.5);
-            transform: translateY(-3px);
-            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-        }
-
-        #loginBtn { width: 100%; }
-
-        #errorMessage {
-            color: #ff5252;
-            font-size: 14px;
-            margin-top: 15px;
-            display: none;
-        }
-
-        .note { 
-            padding: 25px; 
-            margin-bottom: 20px;
-            display: flex; 
-            flex-direction: column; 
-            gap: 15px;
-        }
-
-        .note-text { 
-            white-space: pre-wrap;
-            word-break: break-word;
-            font-size: 16px;
-            line-height: 1.6;
-            color: rgba(255, 255, 255, 0.95);
-        }
-
-        .note-footer {
-            display: flex;
-            justify-content: flex-end;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
-            padding-top: 15px;
-            margin-top: 5px;
-        }
-
-        .delete-btn { 
-            background: transparent;
-            border: none;
-            padding: 8px 15px;
-            color: rgba(255, 255, 255, 0.5);
-            font-size: 14px;
-            text-transform: none;
-            letter-spacing: 0.5px;
-        }
-
-        .delete-btn:hover { 
-            background: rgba(255, 82, 82, 0.15);
-            color: #ff5252;
-            transform: translateY(0);
-            box-shadow: none;
-        }
-    </style>
-</head>
-<body>
-
-    <div id="loginScreen" class="glass">
-        <h2>serfus</h2>
-        <input type="password" id="passwordInput" placeholder="Пароль...">
-        <button id="loginBtn" onclick="checkPassword()">Войти</button>
-        <div id="errorMessage">Неверный пароль!</div>
-    </div>
-
-    <div id="appContainer" class="container glass">
-        <h1>serfus</h1>
-        <textarea id="noteInput" placeholder="Опишите свои идеи..."></textarea>
-        <div class="actions">
-            <button onclick="addNote()">Сохранить</button>
-        </div>
-        
-        <input type="text" id="searchInput" placeholder="Поиск по заметкам..." oninput="searchNotes()">
-        <div id="notesContainer"></div>
-    </div>
-
-    <script>
-        // ТВОЙ ПАРОЛЬ 
-        const MY_PASSWORD = "1234";
-
-        function checkPassword() {
-            const input = document.getElementById('passwordInput').value;
-            if (input === MY_PASSWORD) {
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('appContainer').style.display = 'block';
-                loadNotes(); 
-            } else {
-                document.getElementById('errorMessage').style.display = 'block';
-                document.getElementById('passwordInput').value = '';
-            }
-        }
-
-        document.getElementById('passwordInput').addEventListener('keypress', function (e) {
-            if (e.key === 'Enter') checkPassword();
-        });
-
-        function escapeHTML(str) {
-            return str.replace(/[&<>'"]/g, 
-                tag => ({
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    "'": '&#39;',
-                    '"': '&quot;'
-                }[tag])
-            );
-        }
-
-        function loadNotes(searchQuery = '') {
-            const notes = JSON.parse(localStorage.getItem('glassNotes')) || [];
-            const container = document.getElementById('notesContainer');
-            container.innerHTML = '';
-            
-            let notesWithIndices = notes.map((text, index) => ({ text, originalIndex: index }));
-            notesWithIndices.reverse();
-
-            if (searchQuery.trim() !== '') {
-                const lowerCaseQuery = searchQuery.toLowerCase();
-                notesWithIndices = notesWithIndices.filter(noteObj => 
-                    noteObj.text.toLowerCase().includes(lowerCaseQuery)
-                );
-            }
-
-            notesWithIndices.forEach(noteObj => {
-                const safeText = escapeHTML(noteObj.text); 
-                
-                const noteDiv = document.createElement('div');
-                noteDiv.className = 'note glass';
-                noteDiv.innerHTML = `
-                    <div class="note-text">${safeText}</div>
-                    <div class="note-footer">
-                        <button class="delete-btn" onclick="deleteNote(${noteObj.originalIndex})">Удалить</button>
-                    </div>
-                `;
-                container.appendChild(noteDiv);
-            });
-        }
-
-        function searchNotes() {
-            const query = document.getElementById('searchInput').value;
-            loadNotes(query);
-        }
-
-        function addNote() {
-            const input = document.getElementById('noteInput');
-            const noteText = input.value.trim();
-            
-            if (noteText !== '') {
-                const notes = JSON.parse(localStorage.getItem('glassNotes')) || [];
-                notes.push(noteText);
-                localStorage.setItem('glassNotes', JSON.stringify(notes));
-                input.value = ''; 
-                document.getElementById('searchInput').value = '';
-                loadNotes();      
-            }
-        }
-
-        function deleteNote(index) {
-            const notes = JSON.parse(localStorage.getItem('glassNotes')) || [];
-            notes.splice(index, 1);
-            localStorage.setItem('glassNotes', JSON.stringify(notes));
-            const currentSearchQuery = document.getElementById('searchInput').value;
-            loadNotes(currentSearchQuery);
-        }
-    </script>
-</body>
-</html>
+            box-shadow:
