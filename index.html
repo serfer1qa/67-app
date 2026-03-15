@@ -5,20 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>serfus</title>
     <style>
-        /* Глубокий градиент */
         body { 
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; 
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; 
             margin: 0;
-            padding: 20px;
+            padding: 0;
             min-height: 100vh;
             color: #ffffff;
+            /* Тот самый синий градиент */
             background: linear-gradient(-45deg, #0f0c29, #302b63, #24243e, #0d1b2a);
             background-size: 400% 400%;
             animation: gradientBG 15s ease infinite;
             display: flex;
             justify-content: center;
             align-items: center;
-            box-sizing: border-box;
         }
 
         @keyframes gradientBG {
@@ -27,119 +26,134 @@
             100% { background-position: 0% 50%; }
         }
 
-        /* Эффект стекла */
+        /* Сделали стекло чуть более заметным (0.1 вместо 0.03) */
         .glass {
-            background: rgba(255, 255, 255, 0.03);
+            background: rgba(255, 255, 255, 0.1); 
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
             border-radius: 24px;
         }
 
-        /* Главный контейнер на весь экран */
-        .container { 
-            width: 100%;
-            max-width: 900px; /* Сделали еще шире */
-            padding: 40px;
-            display: none; 
-            position: relative;
-            box-sizing: border-box;
-        }
-
-        /* Экран блокировки */
+        /* Контейнер входа */
         #loginScreen {
-            width: 100%;
+            width: 90%;
             max-width: 350px;
-            padding: 50px 40px;
+            padding: 40px;
             text-align: center;
         }
 
-        #loginScreen h2 {
-            margin-top: 0;
-            font-weight: 300;
-            margin-bottom: 30px;
-            font-size: 32px;
-            letter-spacing: 2px;
-        }
-
-        /* Шапка с названием и иконкой */
-        .header {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        /* Главный контейнер */
+        .container { 
+            width: 95%;
+            max-width: 900px;
+            padding: 30px;
+            display: none; /* Скрыт до ввода пароля */
             position: relative;
+        }
+
+        h1, h2 { 
+            font-weight: 200; 
+            letter-spacing: 3px;
             margin-bottom: 30px;
         }
 
-        h1 { 
-            font-size: 36px; 
-            font-weight: 200; 
-            margin: 0;
-            letter-spacing: 3px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        /* Кнопка-иконка истории */
-        .history-btn {
-            position: absolute;
-            right: 0;
-            background: transparent;
-            border: none;
-            padding: 10px;
-            cursor: pointer;
-            color: rgba(255, 255, 255, 0.7);
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 12px;
-        }
-
-        .history-btn:hover {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            transform: scale(1.05);
-        }
-
-        .history-btn svg {
-            width: 28px;
-            height: 28px;
-            fill: currentColor;
-        }
-
-        /* Гигантское поле ввода */
-        textarea { 
-            width: 100%; 
-            background: rgba(0, 0, 0, 0.15);
-            backdrop-filter: blur(10px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            color: #ffffff;
-            border-radius: 16px; 
-            padding: 25px; 
-            font-size: 18px; /* Текст еще крупнее */
-            font-family: inherit;
-            box-sizing: border-box;
-            resize: none; /* Отключили ручное растягивание */
-            height: 50vh; /* Занимает половину высоты экрана */
-            transition: all 0.3s ease;
-            line-height: 1.6;
-        }
-
-        input[type="text"], input[type="password"] {
+        input[type="password"], textarea {
             width: 100%;
-            background: rgba(0, 0, 0, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
             color: #ffffff;
-            padding: 15px 20px;
-            margin-bottom: 25px;
+            padding: 15px;
             border-radius: 12px;
             font-size: 16px;
+            margin-bottom: 20px;
             box-sizing: border-box;
         }
 
-        textarea:focus, input[type="text"]:focus, input[type="password"]:focus {
-            outline: none;
-            background: rgba(0, 0, 0, 0.25);
-            border-color: rgba(255, 255, 255, 0.4);
-            box-shadow:
+        textarea { height: 300px; resize: none; }
+
+        button {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 1px solid white;
+            padding: 12px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            transition: 0.3s;
+        }
+
+        button:hover { background: white; color: black; }
+
+        /* История */
+        .history-btn { position: absolute; top: 30px; right: 30px; cursor: pointer; opacity: 0.7; }
+        .history-btn:hover { opacity: 1; }
+
+        /* Модалка */
+        #historyModal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="loginScreen" class="glass">
+        <h2>serfus</h2>
+        <input type="password" id="pass" placeholder="Пароль...">
+        <button onclick="check()">Войти</button>
+    </div>
+
+    <div id="app" class="container glass">
+        <div class="history-btn" onclick="showH()">📜</div>
+        <h1>serfus</h1>
+        <textarea id="text" placeholder="Пиши тут..."></textarea>
+        <br>
+        <button onclick="save()">Сохранить</button>
+    </div>
+
+    <div id="historyModal" onclick="closeH()">
+        <div class="glass" style="padding: 30px; width: 80%; max-width: 500px;" onclick="event.stopPropagation()">
+            <h3>История</h3>
+            <div id="list" style="max-height: 400px; overflow-y: auto;"></div>
+            <br>
+            <button onclick="closeH()">Закрыть</button>
+        </div>
+    </div>
+
+    <script>
+        const P = "1234"; // ТВОЙ ПАРОЛЬ
+
+        function check() {
+            if(document.getElementById('pass').value === P) {
+                document.getElementById('loginScreen').style.display = 'none';
+                document.getElementById('app').style.display = 'block';
+            } else { alert('Неверно'); }
+        }
+
+        function save() {
+            let t = document.getElementById('text').value;
+            if(!t) return;
+            let n = JSON.parse(localStorage.getItem('nn') || '[]');
+            n.push(t);
+            localStorage.setItem('nn', JSON.stringify(n));
+            document.getElementById('text').value = '';
+            alert('Сохранено!');
+        }
+
+        function showH() {
+            document.getElementById('historyModal').style.display = 'flex';
+            let n = JSON.parse(localStorage.getItem('nn') || '[]');
+            document.getElementById('list').innerHTML = n.map(x => `<div style="border-bottom:1px solid rgba(255,255,255,0.1); padding:10px;">${x}</div>`).join('');
+        }
+
+        function closeH() { document.getElementById('historyModal').style.display = 'none'; }
+    </script>
+</body>
+</html>
